@@ -1,0 +1,17 @@
+
+{
+  "name": "SHIQ - شي إن العراق",
+  "short_name": "SHIQ",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6a0dad",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-shiq-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
