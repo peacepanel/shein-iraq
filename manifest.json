@@ -1,17 +1,124 @@
-
 {
-  "name": "SHIQ - شي إن العراق",
+  "name": "SHIQ - شي ان العراق",
   "short_name": "SHIQ",
+  "description": "تطبيق شي ان العراق - تسوق أحدث الأزياء والاكسسوارات بأفضل الأسعار",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#6a0dad",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
+  "background_color": "#667eea",
+  "theme_color": "#8B5CF6",
+  "lang": "ar",
+  "dir": "rtl",
+  "scope": "./",
+  "categories": ["shopping", "lifestyle", "business"],
+  "screenshots": [
+    {
+      "src": "screenshots/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/screenshot-narrow.png", 
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
   "icons": [
     {
-      "src": "icon-shiq-512.png",
+      "src": "icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-96x96.png",
+      "sizes": "96x96", 
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "الاكسسوارات النسائية",
+      "short_name": "اكسسوارات",
+      "description": "تصفح الاكسسوارات النسائية",
+      "url": "./index.html#accessories",
+      "icons": [
+        {
+          "src": "icons/shortcut-accessories.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "الأحذية والحقائب",
+      "short_name": "أحذية",
+      "description": "تصفح الأحذية والحقائب",
+      "url": "./index.html#shoes",
+      "icons": [
+        {
+          "src": "icons/shortcut-shoes.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "السلة",
+      "short_name": "السلة", 
+      "description": "مراجعة منتجات السلة",
+      "url": "./index.html#cart",
+      "icons": [
+        {
+          "src": "icons/shortcut-cart.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
 }

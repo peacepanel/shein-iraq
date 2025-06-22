@@ -1,0 +1,68 @@
+{
+  "name": "shiq-pwa",
+  "version": "1.0.0",
+  "description": "SHIQ - شي ان العراق - Progressive Web App for online shopping",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -c-1",
+    "build": "npm run minify:html && npm run minify:js && npm run minify:css",
+    "minify:html": "html-minifier --input-dir . --output-dir dist --file-ext html --remove-comments --collapse-whitespace --minify-css --minify-js",
+    "minify:js": "uglifyjs app.js -o dist/app.min.js -c -m",
+    "minify:css": "cleancss -o dist/styles.min.css styles.css",
+    "serve": "npx http-server dist -p 8080 -c-1",
+    "test": "npm run validate:manifest && npm run validate:sw",
+    "validate:manifest": "node scripts/validate-manifest.js",
+    "validate:sw": "node scripts/validate-sw.js",
+    "lighthouse": "npx lighthouse http://localhost:3000 --output html --output-path ./lighthouse-report.html",
+    "icons:generate": "node scripts/generate-icons.js",
+    "deploy": "npm run build && npm run test"
+  },
+  "keywords": [
+    "pwa",
+    "shopping",
+    "ecommerce",
+    "iraq",
+    "arabic",
+    "mobile-app",
+    "progressive-web-app"
+  ],
+  "author": "SHIQ Development Team",
+  "license": "MIT",
+  "homepage": "https://github.com/username/shiq-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/shiq-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/shiq-app/issues"
+  },
+  "devDependencies": {
+    "html-minifier": "^4.0.0",
+    "clean-css-cli": "^5.6.2",
+    "uglify-js": "^3.17.4",
+    "http-server": "^14.1.1",
+    "lighthouse": "^11.4.0",
+    "sharp": "^0.32.6",
+    "jimp": "^0.22.10"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "pwa": {
+    "name": "SHIQ - شي ان العراق",
+    "short_name": "SHIQ",
+    "theme_color": "#8B5CF6",
+    "background_color": "#667eea",
+    "display": "standalone",
+    "orientation": "portrait",
+    "start_url": "./index.html",
+    "scope": "./"
+  }
+}

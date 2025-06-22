@@ -1,19 +1,805 @@
-
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SHIQ - شي إن العراق</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#6a0dad"/>
-  <link rel="icon" href="icon-shiq-512.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHIQ - شي ان العراق</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#8B5CF6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SHIQ">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="تطبيق شي ان العراق - تسوق أحدث الأزياء والاكسسوارات بأفضل الأسعار">
+    <meta name="keywords" content="شي ان, العراق, تسوق, أزياء, اكسسوارات, ملابس">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+            direction: rtl;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #C084FC 100%);
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(139, 92, 246, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .header .tagline {
+            display: none;
+        }
+
+        /* Install App Banner */
+        .install-banner {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            display: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .install-banner:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .install-banner.show {
+            display: block;
+        }
+
+        /* Search Box */
+        .search-container {
+            max-width: 600px;
+            margin: 8px auto;
+            padding: 0 15px;
+            position: relative;
+        }
+
+        #searchBox {
+            width: 100%;
+            padding: 14px 50px 14px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        #searchBox:focus {
+            outline: none;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8B5CF6;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Category Navigation Bar */
+        .category-nav {
+            background: rgba(255,255,255,0.95);
+            padding: 8px 5px;
+            margin: 5px 10px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .category-nav::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .category-nav::-webkit-scrollbar-track {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 2px;
+        }
+
+        .category-nav::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #8B5CF6, #A855F7);
+            border-radius: 2px;
+        }
+
+        .nav-category-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            color: white;
+            padding: 14px 22px;
+            margin: 0 6px;
+            border-radius: 25px;
+            font-weight: 900;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            border: none;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-category-btn:hover, .nav-category-btn.active {
+            background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Category Container */
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            width: 100%;
+            position: relative;
+            aspect-ratio: 0.85;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .category:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.15);
+        }
+
+        .category img {
+            width: 100%;
+            height: 75%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            flex-shrink: 0;
+        }
+
+        .category:hover img {
+            transform: scale(1.05);
+        }
+
+        .category-name {
+            padding: 15px 8px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            height: 25%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        /* Workbook Container */
+        .workbook-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px 15px;
+            justify-content: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .workbook-button {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #C084FC 100%);
+            color: white;
+            padding: 16px 26px;
+            border-radius: 25px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+            min-width: 130px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .workbook-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 50%, #A855F7 100%);
+        }
+
+        /* Product Container */
+        .products-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #product-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        .product {
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+        }
+
+        .product img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .product:hover img {
+            transform: scale(1.03);
+        }
+
+        .product-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .product-code {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #333;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .product-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ef4444;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-size {
+            font-size: 1.2rem;
+            color: #8B5CF6;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .price-icon, .size-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Add to Cart Button */
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 20px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            color: white;
+            font-weight: 900;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+            margin-top: 5px;
+        }
+
+        .add-to-cart-btn:hover {
+            background: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.4);
+        }
+
+        .add-to-cart-btn.selected {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* Cart Button */
+        .cart-button {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 18px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
+            background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+        }
+
+        /* Overlay */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        #enlargedImage {
+            max-width: 95vw;
+            max-height: 95vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #enlargedImage:hover {
+            transform: scale(1.02);
+        }
+
+        #closeOverlay {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 35px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        #overlay .instruction-text {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #666;
+            font-size: 14px;
+            background: rgba(255,255,255,0.95);
+            padding: 10px 20px;
+            border-radius: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+        }
+
+        #closeOverlay:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 1);
+            color: #ef4444;
+        }
+
+        /* Default message */
+        .default-message {
+            text-align: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 15px 0;
+            opacity: 0.95;
+            background: rgba(255,255,255,0.15);
+            padding: 20px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Loading animation */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+
+        .loading::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Icons */
+        .emoji-icon {
+            font-size: 1.2em;
+            margin-left: 5px;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 769px) {
+            .category-nav {
+                margin: 8px 25px;
+                padding: 12px 10px;
+            }
+
+            .nav-category-btn {
+                padding: 16px 30px;
+                font-size: 1.1rem;
+                margin: 0 8px;
+            }
+
+            .category-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .category-name {
+                font-size: 1.3rem;
+                padding: 15px 8px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .category-nav {
+                margin: 10px 35px;
+                padding: 15px 15px;
+            }
+
+            .nav-category-btn {
+                padding: 18px 35px;
+                font-size: 1.2rem;
+                margin: 0 10px;
+            }
+
+            .category-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .category-name {
+                font-size: 1.4rem;
+                padding: 18px 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .category-nav {
+                margin: 4px 10px;
+                padding: 6px 4px;
+            }
+
+            .nav-category-btn {
+                padding: 12px 18px;
+                font-size: 0.9rem;
+                margin: 0 3px;
+            }
+            
+            .category-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                padding: 10px;
+            }
+            
+            .category {
+                border-radius: 15px;
+            }
+            
+            .category-name {
+                font-size: 1.1rem;
+                padding: 10px 4px;
+                font-weight: 900;
+            }
+            
+            .product img {
+                height: 280px;
+            }
+            
+            .workbook-container {
+                padding: 6px 10px;
+                gap: 6px;
+            }
+            
+            .workbook-button {
+                padding: 14px 22px;
+                font-size: 1rem;
+                min-width: 110px;
+                font-weight: 800;
+            }
+            
+            .cart-button {
+                bottom: 15px;
+                left: 15px;
+                padding: 16px 24px;
+                font-size: 1rem;
+            }
+            
+            .product-info {
+                padding: 12px 15px;
+            }
+            
+            .product-code {
+                font-size: 2.2rem;
+            }
+            
+            .product-price {
+                font-size: 1.8rem;
+            }
+
+            .product-size {
+                font-size: 1.2rem;
+            }
+
+            .add-to-cart-btn {
+                padding: 18px;
+                font-size: 1.2rem;
+            }
+
+            #enlargedImage {
+                max-width: 98vw;
+                max-height: 90vh;
+                border-radius: 15px;
+            }
+
+            #closeOverlay {
+                top: 20px;
+                right: 20px;
+                font-size: 30px;
+                width: 45px;
+                height: 45px;
+            }
+
+            #overlay .instruction-text {
+                bottom: 20px;
+                font-size: 12px;
+                padding: 8px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .category-nav {
+                margin: 3px 8px;
+                padding: 5px 3px;
+            }
+
+            .nav-category-btn {
+                padding: 10px 14px;
+                font-size: 0.85rem;
+                margin: 0 2px;
+                min-width: 85px;
+            }
+
+            .category-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 6px;
+                padding: 8px;
+            }
+            
+            .category {
+                border-radius: 12px;
+            }
+            
+            .category-name {
+                font-size: 1rem;
+                padding: 8px 3px;
+                font-weight: 900;
+                line-height: 1.1;
+            }
+            
+            .product img {
+                height: 220px;
+            }
+            
+            .workbook-container {
+                padding: 5px 8px;
+                gap: 5px;
+            }
+            
+            .workbook-button {
+                padding: 12px 18px;
+                font-size: 0.9rem;
+                min-width: 95px;
+                font-weight: 800;
+            }
+            
+            .product-code {
+                font-size: 2rem;
+            }
+            
+            .product-price {
+                font-size: 1.6rem;
+            }
+
+            .product-size {
+                font-size: 1.1rem;
+            }
+
+            .add-to-cart-btn {
+                padding: 16px;
+                font-size: 1.1rem;
+            }
+
+            .product-info {
+                padding: 10px 12px;
+            }
+
+            #enlargedImage {
+                max-width: 100vw;
+                max-height: 85vh;
+                border-radius: 10px;
+            }
+
+            #closeOverlay {
+                top: 15px;
+                right: 15px;
+                font-size: 25px;
+                width: 40px;
+                height: 40px;
+            }
+
+            #overlay .instruction-text {
+                bottom: 15px;
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
 </head>
-<body style="text-align: center; font-family: Arial;">
-  <h1>مرحبًا بك في تطبيق SHIQ - شي إن العراق</h1>
-  <p>تطبيق إلكتروني تجريبي لعرض المنتجات وتثبيته على هاتفك بسهولة.</p>
-  <img src="icon-shiq-512.png" alt="SHIQ Logo" width="180" style="margin:20px; border-radius: 30px;" />
-  <p>اضغط على القائمة واختر "Add to Home Screen" لتثبيت التطبيق.</p>
-  <script src="sw.js"></script>
+<body>
+    <!-- Install App Banner -->
+    <div class="install-banner" id="installBanner">
+        <div>📱 ثبت التطبيق على هاتفك للوصول السريع</div>
+    </div>
+
+    <div class="header">
+        <h1>🛍️ شي ان العراق <span style="font-size: 0.6em;">✨</span></h1>
+    </div>
+
+    <div class="category-nav" id="category-nav"></div>
+
+    <div id="category-container" class="category-container"></div>
+
+    <div class="search-container">
+        <input type="text" id="searchBox" placeholder="🔍 ابحث عن المنتج..." oninput="searchProduct()">
+        <span class="search-icon">🔍</span>
+    </div>
+
+    <div id="workbook-container" class="workbook-container"></div>
+
+    <div class="products-section">
+        <div id="product-container" class="default-message">
+            اختر فئة من الأعلى للبدء في التسوق <span class="emoji-icon">👆</span>
+        </div>
+    </div>
+
+    <div id="overlay" onclick="closeEnlargedImage()">
+        <img id="enlargedImage" src="" alt="Enlarged Image">
+        <span id="closeOverlay">×</span>
+        <div class="instruction-text">
+            انقر في أي مكان للإغلاق
+        </div>
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+        <span>🛒</span>
+        <span>مراجعة السلة</span>
+    </button>
+
+    <script src="app.js"></script>
 </body>
 </html>
