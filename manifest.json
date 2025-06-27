@@ -1,7 +1,7 @@
 {
   "name": "SHIQ - شي ان العراق",
   "short_name": "SHIQ",
-  "description": "تطبيق شي ان العراق - تسوق أحدث الأزياء والاكسسوارات بأفضل الأسعار",
+  "description": "تطبيق شي ان العراق - تسوق أحدث الأزياء والاكسسوارات بأفضل الأسعار مع إشعارات العروض الخاصة",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -11,20 +11,24 @@
   "dir": "rtl",
   "scope": "./",
   "categories": ["shopping", "lifestyle", "business"],
+  
   "screenshots": [
     {
       "src": "screenshots/screenshot-wide.png",
       "sizes": "1280x720",
       "type": "image/png",
-      "form_factor": "wide"
+      "form_factor": "wide",
+      "label": "الواجهة الرئيسية لشي ان العراق"
     },
     {
       "src": "screenshots/screenshot-narrow.png", 
       "sizes": "750x1334",
       "type": "image/png",
-      "form_factor": "narrow"
+      "form_factor": "narrow",
+      "label": "تصفح المنتجات والفئات"
     }
   ],
+  
   "icons": [
     {
       "src": "icons/icon-72x72.png",
@@ -75,6 +79,7 @@
       "purpose": "maskable any"
     }
   ],
+  
   "shortcuts": [
     {
       "name": "الاكسسوارات النسائية",
@@ -111,14 +116,75 @@
           "sizes": "96x96"
         }
       ]
+    },
+    {
+      "name": "الإشعارات",
+      "short_name": "إشعارات",
+      "description": "إعدادات الإشعارات والعروض",
+      "url": "./index.html#notifications",
+      "icons": [
+        {
+          "src": "icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
+  
   "related_applications": [],
   "prefer_related_applications": false,
+  
   "edge_side_panel": {
     "preferred_width": 480
   },
+  
   "launch_handler": {
     "client_mode": "navigate-existing"
+  },
+  
+  "permissions": [
+    "notifications"
+  ],
+  
+  "notification_permissions": {
+    "supported": true,
+    "required": false,
+    "description": "احصل على إشعارات بأحدث العروض والمنتجات الجديدة"
+  },
+  
+  "gcm_sender_id": "826765783989",
+  
+  "firebase_messaging": {
+    "default_notification_icon": "./icons/icon-192x192.png",
+    "default_notification_color": "#8B5CF6"
+  },
+  
+  "web_accessible_resources": [
+    "icons/*",
+    "firebase-messaging-sw.js"
+  ],
+  
+  "features": [
+    {
+      "name": "notifications",
+      "description": "دعم الإشعارات الفورية للعروض والمنتجات الجديدة"
+    },
+    {
+      "name": "offline_support", 
+      "description": "تصفح المنتجات حتى بدون إنترنت"
+    },
+    {
+      "name": "native_experience",
+      "description": "تجربة مشابهة للتطبيقات الأصلية"
+    }
+  ],
+  
+  "custom_properties": {
+    "app_version": "3.2.0",
+    "notification_support": true,
+    "offline_support": true,
+    "firebase_integration": true,
+    "target_market": "Iraq",
+    "primary_language": "Arabic"
   }
 }
